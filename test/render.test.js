@@ -1,6 +1,6 @@
 import { beforeEach, expect, it } from 'vitest';
-import { render } from './render.js';
-import html from './index.html?raw';
+import { render } from '../page/render.js';
+import html from '../page/index.html?raw';
 
 // The shape idleview_core::View serialises to - here, the screenshot.
 const view = () => ({

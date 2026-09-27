@@ -1,0 +1,13 @@
+{
+  "name": "idleview-web",
+  "private": true,
+  "type": "module",
+  "description": "The Idleview screen: one page, drawn by the desktop app and served on the web",
+  "scripts": {
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "jsdom": "^24.0.0",
+    "vitest": "^4.1.7"
+  }
+}
