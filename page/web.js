@@ -1,8 +1,12 @@
-// The browser's side of the screen. The Worker that serves this page also computes the
-// view (GET /api/view) from the visitor's location and local time, using the same Rust
-// core as the desktop app; this fetches it on the minute and draws it. No settings.
+// The browser's side of the screen. This page is hosted on GitHub Pages; the photo
+// Worker computes the view (GET /api/view) from the visitor's location and local time,
+// using the same Rust core as the desktop app. This fetches it on the minute and draws
+// it. No settings.
 
 import { render } from './render.js';
+
+// The Worker allows this page's origin (CORS), so the page can live anywhere it lists.
+const API = 'https://idleview-photos.idleview.workers.dev';
 
 let shownPhoto = null;
 
@@ -13,7 +17,7 @@ async function update() {
     const height = Math.round(window.innerHeight * scale);
 
     try {
-        const response = await fetch(`/api/view?w=${width}&h=${height}`);
+        const response = await fetch(`${API}/api/view?w=${width}&h=${height}`);
         if (!response.ok) return;
         const { view, download_location: downloadLocation } = await response.json();
         render(view);
@@ -22,7 +26,7 @@ async function update() {
         if (view.photo && view.photo.url !== shownPhoto) {
             shownPhoto = view.photo.url;
             if (downloadLocation) {
-                fetch('/api/photo/download', {
+                fetch(`${API}/api/photo/download`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ downloadUrl: downloadLocation }),
