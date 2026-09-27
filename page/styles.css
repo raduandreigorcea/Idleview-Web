@@ -339,7 +339,23 @@ body.dark {
     color: white;
     z-index: 1000;
     transition: opacity 0.5s ease;
-    max-width: 20rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* A white quiet zone around the code: phones need the contrast to lock on. */
+.pairing-qr {
+    width: 9rem;
+    height: 9rem;
+    background: white;
+    padding: 0.4rem;
+    border-radius: 0.5rem;
+    flex-shrink: 0;
+}
+
+.pairing-details {
+    max-width: 14rem;
 }
 
 #pairing-card.hidden {

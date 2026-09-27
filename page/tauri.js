@@ -42,16 +42,24 @@ async function showPairingCard(durationMs) {
         return div;
     };
 
-    // The LAN address: 127.0.0.1 is useless to the phone being paired.
-    const lanUrl = info.urls.find((url) => !url.includes('127.0.0.1')) || info.urls[0];
+    // Scanning the code opens the panel already paired (the token is in the link).
+    // It is a data: URL from Rust, shown with <img>, so no markup is injected.
+    const qr = document.createElement('img');
+    qr.className = 'pairing-qr';
+    qr.src = info.qr;
+    qr.alt = 'QR code: scan to open the control panel';
 
-    card.replaceChildren(
-        line('pairing-title', 'Control panel'),
-        line('pairing-url', lanUrl),
-        line('pairing-label', 'Token'),
+    const details = document.createElement('div');
+    details.className = 'pairing-details';
+    details.append(
+        line('pairing-title', 'Scan to control this screen'),
+        line('pairing-url', info.url),
+        line('pairing-label', 'Or type the token'),
         line('pairing-token', info.token),
         line('pairing-hint', 'Press T to show or hide')
     );
+
+    card.replaceChildren(qr, details);
     card.classList.remove('hidden');
 
     clearTimeout(pairingTimer);
